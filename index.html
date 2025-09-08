@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ulangkaji Ejaan - Bahagian Badan</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-purple-400 via-pink-400 to-red-400">
+    <div class="container mx-auto px-4 py-8">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-white mb-2">🎯 Ulangkaji Ejaan</h1>
+            <p class="text-white text-lg">Bahagian Badan Manusia</p>
+        </div>
+
+        <!-- Tab Navigation -->
+        <div class="flex justify-center mb-8">
+            <div class="bg-white rounded-full p-1 shadow-lg">
+                <button id="practiceTab" class="px-6 py-3 rounded-full font-semibold transition-all duration-300 bg-purple-600 text-white">
+                    📚 Latihan
+                </button>
+                <button id="testTab" class="px-6 py-3 rounded-full font-semibold transition-all duration-300 text-purple-600 hover:bg-purple-100">
+                    🎯 Ujian
+                </button>
+            </div>
+        </div>
+
+        <!-- Practice Mode -->
+        <div id="practiceMode" class="max-w-2xl mx-auto bg-white rounded-3xl shadow-2xl p-8">
+            <div class="text-center mb-8">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">📚 Mod Latihan</h2>
+                <p class="text-gray-600">Klik pada setiap bahagian badan untuk mendengar sebutan dan melihat ejaannya</p>
+            </div>
+
+            <!-- Practice Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="practice-card bg-gradient-to-br from-blue-100 to-blue-200 p-6 rounded-2xl cursor-pointer hover:shadow-lg transition-all duration-300" data-word="mata">
+                    <div class="text-center">
+                        <div class="text-5xl mb-3">👁️</div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-2">MATA</h3>
+                        <button class="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 transition-all duration-300">
+                            🔊 Dengar
+                        </button>
+                    </div>
+                </div>
+
+                <div class="practice-card bg-gradient-to-br from-green-100 to-green-200 p-6 rounded-2xl cursor-pointer hover:shadow-lg transition-all duration-300" data-word="hidung">
+                    <div class="text-center">
+                        <div class="text-5xl mb-3">👃</div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-2">HIDUNG</h3>
+                        <button class="bg-green-500 text-white px-4 py-2 rounded-full hover:bg-green-600 transition-all duration-300">
+                            🔊 Dengar
+                        </button>
+                    </div>
+                </div>
+
+                <div class="practice-card bg-gradient-to-br from-pink-100 to-pink-200 p-6 rounded-2xl cursor-pointer hover:shadow-lg transition-all duration-300" data-word="mulut">
+                    <div class="text-center">
+                        <div class="text-5xl mb-3">👄</div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-2">MULUT</h3>
+                        <button class="bg-pink-500 text-white px-4 py-2 rounded-full hover:bg-pink-600 transition-all duration-300">
+                            🔊 Dengar
+                        </button>
+                    </div>
+                </div>
+
+                <div class="practice-card bg-gradient-to-br from-yellow-100 to-yellow-200 p-6 rounded-2xl cursor-pointer hover:shadow-lg transition-all duration-300" data-word="telinga">
+                    <div class="text-center">
+                        <div class="text-5xl mb-3">👂</div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-2">TELINGA</h3>
+                        <button class="bg-yellow-500 text-white px-4 py-2 rounded-full hover:bg-yellow-600 transition-all duration-300">
+                            🔊 Dengar
+                        </button>
+                    </div>
+                </div>
+
+                <div class="practice-card bg-gradient-to-br from-purple-100 to-purple-200 p-6 rounded-2xl cursor-pointer hover:shadow-lg transition-all duration-300 md:col-span-2" data-word="kepala">
+                    <div class="text-center">
+                        <div class="text-5xl mb-3">🗣️</div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-2">KEPALA</h3>
+                        <button class="bg-purple-500 text-white px-4 py-2 rounded-full hover:bg-purple-600 transition-all duration-300">
+                            🔊 Dengar
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-8">
+                <button id="startTestBtn" class="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 py-4 rounded-full text-xl font-semibold hover:from-purple-700 hover:to-pink-700 transition-all duration-300 shadow-lg">
+                    🎯 Mula Ujian Sekarang
+                </button>
+            </div>
+        </div>
+
+        <!-- Test Mode -->
+        <div id="testMode" class="max-w-2xl mx-auto bg-white rounded-3xl shadow-2xl p-8 hidden">
+            <!-- Score -->
+            <div class="flex justify-between items-center mb-6">
+                <div class="text-lg font-semibold text-gray-700">
+                    Soalan: <span id="currentQuestion">1</span>/5
+                </div>
+                <div class="text-lg font-semibold text-green-600">
+                    Skor: <span id="score">0</span>
+                </div>
+            </div>
+
+            <!-- Question Area -->
+            <div class="text-center mb-8">
+                <div class="text-6xl mb-4" id="bodyPartEmoji">👁️</div>
+                <button id="playSound" class="bg-blue-500 text-white px-8 py-4 rounded-full text-xl font-semibold hover:bg-blue-600 transition-all duration-300 shadow-lg">
+                    🔊 Dengar Perkataan
+                </button>
+            </div>
+
+            <!-- Answer Input -->
+            <div class="mb-6">
+                <label class="block text-gray-700 text-lg font-semibold mb-3">Taip ejaan yang betul:</label>
+                <input type="text" id="answerInput" class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg text-xl text-center focus:border-blue-500 focus:outline-none" placeholder="Masukkan jawapan anda...">
+            </div>
+
+            <!-- Submit Button -->
+            <div class="text-center mb-6">
+                <button id="submitAnswer" class="bg-green-500 text-white px-8 py-3 rounded-full text-xl font-semibold hover:bg-green-600 transition-all duration-300 shadow-lg">
+                    ✓ Hantar Jawapan
+                </button>
+            </div>
+
+            <!-- Feedback -->
+            <div id="feedback" class="text-center text-xl font-semibold mb-4 min-h-[2rem]"></div>
+
+            <!-- Next Button -->
+            <div class="text-center">
+                <button id="nextQuestion" class="bg-purple-500 text-white px-8 py-3 rounded-full text-xl font-semibold hover:bg-purple-600 transition-all duration-300 shadow-lg hidden">
+                    ➡️ Soalan Seterusnya
+                </button>
+            </div>
+
+            <!-- Final Results -->
+            <div id="finalResults" class="text-center hidden">
+                <div class="text-3xl mb-4">🎉</div>
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">Tahniah! Anda telah selesai!</h2>
+                <p class="text-xl text-gray-600 mb-6">Skor akhir anda: <span id="finalScore" class="font-bold text-green-600"></span>/5</p>
+                <button id="restartGame" class="bg-blue-500 text-white px-8 py-3 rounded-full text-xl font-semibold hover:bg-blue-600 transition-all duration-300 shadow-lg">
+                    🔄 Main Semula
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Game data
+        const originalWords = [
+            { word: 'mata', emoji: '👁️' },
+            { word: 'hidung', emoji: '👃' },
+            { word: 'mulut', emoji: '👄' },
+            { word: 'telinga', emoji: '👂' },
+            { word: 'kepala', emoji: '🗣️' }
+        ];
+
+        // Game state
+        let words = [];
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let currentMode = 'practice'; // 'practice' or 'test'
+
+        // Shuffle function
+        function shuffleArray(array) {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+
+        // Initialize game with random word order
+        function initializeGame() {
+            words = shuffleArray(originalWords);
+            currentQuestionIndex = 0;
+            score = 0;
+            scoreSpan.textContent = score;
+        }
+
+        // DOM elements
+        const practiceTab = document.getElementById('practiceTab');
+        const testTab = document.getElementById('testTab');
+        const practiceMode = document.getElementById('practiceMode');
+        const testMode = document.getElementById('testMode');
+        const startTestBtn = document.getElementById('startTestBtn');
+        const currentQuestionSpan = document.getElementById('currentQuestion');
+        const scoreSpan = document.getElementById('score');
+        const bodyPartEmoji = document.getElementById('bodyPartEmoji');
+        const playSound = document.getElementById('playSound');
+        const answerInput = document.getElementById('answerInput');
+        const submitAnswer = document.getElementById('submitAnswer');
+        const feedback = document.getElementById('feedback');
+        const nextQuestion = document.getElementById('nextQuestion');
+        const finalResults = document.getElementById('finalResults');
+        const finalScore = document.getElementById('finalScore');
+        const restartGame = document.getElementById('restartGame');
+
+        // Tab switching functionality
+        function switchToTab(mode) {
+            currentMode = mode;
+            if (mode === 'practice') {
+                practiceTab.className = 'px-6 py-3 rounded-full font-semibold transition-all duration-300 bg-purple-600 text-white';
+                testTab.className = 'px-6 py-3 rounded-full font-semibold transition-all duration-300 text-purple-600 hover:bg-purple-100';
+                practiceMode.classList.remove('hidden');
+                testMode.classList.add('hidden');
+            } else {
+                testTab.className = 'px-6 py-3 rounded-full font-semibold transition-all duration-300 bg-purple-600 text-white';
+                practiceTab.className = 'px-6 py-3 rounded-full font-semibold transition-all duration-300 text-purple-600 hover:bg-purple-100';
+                practiceMode.classList.add('hidden');
+                testMode.classList.remove('hidden');
+                initializeGame();
+                loadQuestion();
+            }
+        }
+
+        // Tab event listeners
+        practiceTab.addEventListener('click', () => switchToTab('practice'));
+        testTab.addEventListener('click', () => switchToTab('test'));
+        startTestBtn.addEventListener('click', () => switchToTab('test'));
+
+        // Practice card functionality
+        document.querySelectorAll('.practice-card').forEach(card => {
+            const button = card.querySelector('button');
+            const word = card.getAttribute('data-word');
+            
+            button.addEventListener('click', (e) => {
+                e.stopPropagation();
+                speakWord(word);
+            });
+            
+            card.addEventListener('click', () => {
+                speakWord(word);
+            });
+        });
+
+        // Text-to-speech function
+        function speakWord(word) {
+           const audio = new Audio(`audio/${word}.mp3`);
+	   audio.play().catch(err => console.error("Audio play error:", err));
+        }
+
+        // Load current question
+        function loadQuestion() {
+            const currentWord = words[currentQuestionIndex];
+            bodyPartEmoji.textContent = currentWord.emoji;
+            currentQuestionSpan.textContent = currentQuestionIndex + 1;
+            answerInput.value = '';
+            feedback.textContent = '';
+            feedback.className = 'text-center text-xl font-semibold mb-4 min-h-[2rem]';
+            nextQuestion.classList.add('hidden');
+            submitAnswer.classList.remove('hidden');
+            answerInput.focus();
+        }
+
+        // Play sound button
+        playSound.addEventListener('click', () => {
+            const currentWord = words[currentQuestionIndex];
+            speakWord(currentWord.word);
+        });
+
+        // Submit answer
+        function checkAnswer() {
+            const userAnswer = answerInput.value.trim().toLowerCase();
+            const correctAnswer = words[currentQuestionIndex].word.toLowerCase();
+            
+            if (userAnswer === correctAnswer) {
+                score++;
+                scoreSpan.textContent = score;
+                feedback.textContent = '✅ Betul! Jawapan anda tepat!';
+                feedback.className = 'text-center text-xl font-semibold mb-4 min-h-[2rem] text-green-600';
+            } else {
+                feedback.textContent = `❌ Salah. Jawapan yang betul ialah: ${words[currentQuestionIndex].word}`;
+                feedback.className = 'text-center text-xl font-semibold mb-4 min-h-[2rem] text-red-600';
+            }
+            
+            submitAnswer.classList.add('hidden');
+            
+            if (currentQuestionIndex < words.length - 1) {
+                nextQuestion.classList.remove('hidden');
+            } else {
+                showFinalResults();
+            }
+        }
+
+        // Submit button click
+        submitAnswer.addEventListener('click', checkAnswer);
+
+        // Enter key submission
+        answerInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && !submitAnswer.classList.contains('hidden')) {
+                checkAnswer();
+            }
+        });
+
+        // Next question
+        nextQuestion.addEventListener('click', () => {
+            currentQuestionIndex++;
+            loadQuestion();
+        });
+
+        // Show final results
+        function showFinalResults() {
+            document.querySelector('.max-w-2xl > div:not(#finalResults)').style.display = 'none';
+            document.querySelector('.max-w-2xl > .flex').style.display = 'none';
+            document.querySelector('.max-w-2xl > .text-center').style.display = 'none';
+            document.querySelector('.max-w-2xl > .mb-6').style.display = 'none';
+            document.querySelector('.max-w-2xl > .mb-4').style.display = 'none';
+            
+            finalScore.textContent = score;
+            finalResults.classList.remove('hidden');
+        }
+
+        // Restart game
+        restartGame.addEventListener('click', () => {
+            initializeGame();
+            finalResults.classList.add('hidden');
+            
+            // Show all hidden elements
+            testMode.innerHTML = `
+                <!-- Score -->
+                <div class="flex justify-between items-center mb-6">
+                    <div class="text-lg font-semibold text-gray-700">
+                        Soalan: <span id="currentQuestion">1</span>/5
+                    </div>
+                    <div class="text-lg font-semibold text-green-600">
+                        Skor: <span id="score">0</span>
+                    </div>
+                </div>
+
+                <!-- Question Area -->
+                <div class="text-center mb-8">
+                    <div class="text-6xl mb-4" id="bodyPartEmoji">👁️</div>
+                    <button id="playSound" class="bg-blue-500 text-white px-8 py-4 rounded-full text-xl font-semibold hover:bg-blue-600 transition-all duration-300 shadow-lg">
+                        🔊 Dengar Perkataan
+                    </button>
+                </div>
+
+                <!-- Answer Input -->
+                <div class="mb-6">
+                    <label class="block text-gray-700 text-lg font-semibold mb-3">Taip ejaan yang betul:</label>
+                    <input type="text" id="answerInput" class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg text-xl text-center focus:border-blue-500 focus:outline-none" placeholder="Masukkan jawapan anda...">
+                </div>
+
+                <!-- Submit Button -->
+                <div class="text-center mb-6">
+                    <button id="submitAnswer" class="bg-green-500 text-white px-8 py-3 rounded-full text-xl font-semibold hover:bg-green-600 transition-all duration-300 shadow-lg">
+                        ✓ Hantar Jawapan
+                    </button>
+                </div>
+
+                <!-- Feedback -->
+                <div id="feedback" class="text-center text-xl font-semibold mb-4 min-h-[2rem]"></div>
+
+                <!-- Next Button -->
+                <div class="text-center">
+                    <button id="nextQuestion" class="bg-purple-500 text-white px-8 py-3 rounded-full text-xl font-semibold hover:bg-purple-600 transition-all duration-300 shadow-lg hidden">
+                        ➡️ Soalan Seterusnya
+                    </button>
+                </div>
+
+                <!-- Final Results -->
+                <div id="finalResults" class="text-center hidden">
+                    <div class="text-3xl mb-4">🎉</div>
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4">Tahniah! Anda telah selesai!</h2>
+                    <p class="text-xl text-gray-600 mb-6">Skor akhir anda: <span id="finalScore" class="font-bold text-green-600"></span>/5</p>
+                    <button id="restartGame" class="bg-blue-500 text-white px-8 py-3 rounded-full text-xl font-semibold hover:bg-blue-600 transition-all duration-300 shadow-lg">
+                        🔄 Main Semula
+                    </button>
+                </div>
+            `;
+            
+            // Re-initialize event listeners
+            initializeEventListeners();
+            loadQuestion();
+        });
+
+        // Initialize event listeners
+        function initializeEventListeners() {
+            const newPlaySound = document.getElementById('playSound');
+            const newSubmitAnswer = document.getElementById('submitAnswer');
+            const newAnswerInput = document.getElementById('answerInput');
+            const newNextQuestion = document.getElementById('nextQuestion');
+            const newRestartGame = document.getElementById('restartGame');
+            
+            // Update DOM element references
+            Object.assign(window, {
+                currentQuestionSpan: document.getElementById('currentQuestion'),
+                scoreSpan: document.getElementById('score'),
+                bodyPartEmoji: document.getElementById('bodyPartEmoji'),
+                playSound: newPlaySound,
+                answerInput: newAnswerInput,
+                submitAnswer: newSubmitAnswer,
+                feedback: document.getElementById('feedback'),
+                nextQuestion: newNextQuestion,
+                finalResults: document.getElementById('finalResults'),
+                finalScore: document.getElementById('finalScore'),
+                restartGame: newRestartGame
+            });
+            
+            newPlaySound.addEventListener('click', () => {
+                const currentWord = words[currentQuestionIndex];
+                speakWord(currentWord.word);
+            });
+            
+            newSubmitAnswer.addEventListener('click', checkAnswer);
+            
+            newAnswerInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter' && !newSubmitAnswer.classList.contains('hidden')) {
+                    checkAnswer();
+                }
+            });
+            
+            newNextQuestion.addEventListener('click', () => {
+                currentQuestionIndex++;
+                loadQuestion();
+            });
+            
+            if (newRestartGame) {
+                newRestartGame.addEventListener('click', () => {
+                    initializeGame();
+                    switchToTab('practice');
+                });
+            }
+        }
+
+        // Initialize the game
+        initializeGame();
+        loadQuestion();
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97bcb477d3651fe1',t:'MTc1NzMxNjI1My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
